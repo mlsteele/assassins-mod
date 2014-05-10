@@ -22,6 +22,7 @@ class Player(object):
 class AssassinsGame(object):
   def __init__(self, players):
     logger.info("Creating AssassinsGame")
+    assert len(players) > 1
     self.players = players
 
     # mapping from player to whether they're alive.
@@ -32,6 +33,8 @@ class AssassinsGame(object):
     randomized_list = shuffled(self.players)
     for a, b in zip(randomized_list, rotated(randomized_list)):
       self.targets[a] = b
+
+    logger.debug(self)
 
   def disappear(self, target):
     logger.info("Disappearing {}".format(target.name))
@@ -45,6 +48,8 @@ class AssassinsGame(object):
       if self.targets[p] == target:
         self.targets[p] = self.targets[target]
     self.targets[target] = None
+
+    logger.debug(self)
 
   def whos_alive(self):
     return [p for p in self.alive if self.alive[p]]

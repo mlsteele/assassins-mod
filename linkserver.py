@@ -27,7 +27,6 @@ class LinkServer(object):
     """
     assert self._get_callback_id(callback) == None
     event_id = uuid2slug(str(uuid.uuid4()))
-    logger.debug(type(event_id))
     logger.debug("Registered event {}".format(event_id))
     self.callbacks[event_id] = (callback, once)
     return "/event/{}".format(event_id)
