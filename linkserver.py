@@ -28,14 +28,14 @@ class LinkServer(object):
     assert self._get_callback_id(callback) == None
     event_id = uuid2slug(str(uuid.uuid4()))
     logger.debug(type(event_id))
-    logger.debug("LinkServer registered event {}".format(event_id))
+    logger.debug("Registered event {}".format(event_id))
     self.callbacks[event_id] = (callback, once)
     return "/event/{}".format(event_id)
 
   def cancel(self, callback):
     """Disable a callback forever."""
     event_id = self._get_callback_id(callback)
-    logger.debug("LinkServer canceled event {}".format(event_id))
+    logger.debug("Canceled event {}".format(event_id))
     if event_id != None:
       del self.callbacks[event_id]
 
@@ -52,14 +52,14 @@ class LinkServer(object):
     Return whether something happened.
     """
     if event_id in self.callbacks:
-      logger.debug("LinkServer executing event {}".format(event_id))
+      logger.debug("Executing event {}".format(event_id))
       (cb, once) = self.callbacks[event_id]
       cb()
       if once:
         self.cancel(cb)
       return True
     else:
-      logger.debug("LinkServer executing NON-event {}".format(event_id))
+      logger.debug("Executing NON-event {}".format(event_id))
       return False
 
   def serve(self):
@@ -67,7 +67,7 @@ class LinkServer(object):
     Start serving.
     This is blocking.
     """
-    logger.info("LinkServer serving.")
+    logger.info("Serving.")
     app = Flask(__name__)
 
     @app.route("/")
