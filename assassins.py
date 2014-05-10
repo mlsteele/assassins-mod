@@ -36,19 +36,22 @@ class AssassinsGame(object):
   def disappear(self, target):
     logger.info("Disappearing {}".format(target.name))
     assert target in self.players
+    assert target in self.whos_alive()
     # kill target
     self.alive[target] = False
 
     # update targets
-    for p in players:
+    for p in self.players:
       if self.targets[p] == target:
         self.targets[p] = self.targets[target]
+    self.targets[target] = None
 
   def whos_alive(self):
     return [p for p in self.alive if self.alive[p]]
 
   def target_of(self, player):
     assert player in self.players
+    assert player in self.whos_alive()
     return self.targets[player]
 
   def winner(self):
@@ -60,6 +63,11 @@ class AssassinsGame(object):
       return self.whos_alive()[0]
     else:
       return None
+
+  def __str__(self):
+    header = "<AssassinsGame with {}/{} players>".format(len(self.whos_alive()), len(self.players))
+    tasks = ["  {} -> {}".format(p, self.target_of(p)) for p in self.whos_alive()]
+    return '\n'.join([header] + tasks)
 
 
 def rotated(l):

@@ -4,6 +4,9 @@ a = Player('miles', None)
 b = Player('jess', None)
 c = Player('chris', None)
 g = AssassinsGame([a, b, c])
-print "{} -> {}".format(a, g.target_of(a))
-print "{} -> {}".format(b, g.target_of(b))
-print "{} -> {}".format(c, g.target_of(c))
+print g
+g.disappear(a)
+print g
+g.disappear(b)
+print g
+print "And the winner is: {}".format(g.winner())
