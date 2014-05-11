@@ -10,11 +10,6 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
 
-def uuid2slug(uuidstring):
-  # http://stackoverflow.com/questions/12270852/convert-uuid-32-character-hex-string-into-a-youtube-style-short-id-and-back
-  return uuid.UUID(uuidstring).bytes.encode('base64').rstrip('=\n').replace('/', '_')
-
-
 class LinkServer(object):
   def __init__(self):
     # mapping from event_id to (callback, once)
@@ -87,3 +82,8 @@ class LinkServer(object):
         return "I'm afraid that didn't happen, Dave."
 
     app.run()
+
+
+def uuid2slug(uuidstring):
+  # http://stackoverflow.com/questions/12270852/convert-uuid-32-character-hex-string-into-a-youtube-style-short-id-and-back
+  return uuid.UUID(uuidstring).bytes.encode('base64').rstrip('=\n').replace('/', '_')
